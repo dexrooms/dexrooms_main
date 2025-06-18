@@ -3,6 +3,8 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
+import { Clipboard } from "lucide-react";
+import { toast } from "sonner";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
@@ -146,7 +148,7 @@ export default function CampaignDetailPage({
       <div className="relative pt-24 pb-12">
         <div className="container mx-auto px-4">
           {/* Back Button */}
-          <motion.div
+          {/* <motion.div
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6 }}
@@ -161,8 +163,23 @@ export default function CampaignDetailPage({
                 Back to Campaigns
               </Button>
             </Link>
+          </motion.div> */}
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.6 }}
+            className="mb-8 flex items-center gap-4"
+          >
+            <Link href="/campaigns">
+              <Button
+                variant="ghost"
+                className="text-purple-300 hover:text-purple-200 hover:bg-purple-500/10"
+              >
+                <ArrowLeft className="w-4 h-4 mr-2" />
+                Back to Campaigns
+              </Button>
+            </Link>
           </motion.div>
-
           <div className="grid lg:grid-cols-3 gap-8">
             {/* Main Content */}
             <div className="lg:col-span-2 space-y-6">
@@ -188,6 +205,28 @@ export default function CampaignDetailPage({
                           <Badge className="bg-purple-500/20 text-purple-300">
                             Pump.Fun
                           </Badge>
+                          <Button
+                            variant="ghost"
+                            className="text-purple-100 hover:text-white hover:bg-purple-500/20 border border-purple-400/30"
+                            onClick={async () => {
+                              try {
+                                await navigator.clipboard.writeText(
+                                  window.location.href
+                                );
+                                toast.success("Campaign link copied!");
+                                console.log(
+                                  "Campaign link copied to clipboard"
+                                );
+                              } catch (err) {
+                                toast.error("Failed to copy link");
+                              }
+                            }}
+                          >
+                            <div className="flex items-center">
+                              <Clipboard className="w-4 h-4 mr-2" />
+                              <span>Share</span>
+                            </div>
+                          </Button>
                         </div>
 
                         <div className="flex items-center gap-4 text-sm text-white/60 mb-4">
@@ -217,7 +256,7 @@ export default function CampaignDetailPage({
                             </a>
                           )}
                           <a
-                            href={`https://pump.fun/coin/${campaign.contractAddress}`}
+                            href={`https://pump.fun/coin/${campaign.tokenAddress}`}
                             target="_blank"
                             rel="noopener noreferrer"
                             className="flex items-center gap-1 text-purple-300 hover:text-purple-200 text-sm"
