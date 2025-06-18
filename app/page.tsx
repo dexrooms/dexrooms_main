@@ -1,24 +1,24 @@
-"use client"
+"use client";
 
-import { useState, useEffect } from "react"
-import { motion } from "framer-motion"
-import { Pacifico } from "next/font/google"
-import Link from "next/link"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { ElegantShape } from "@/components/geometric-shapes"
-import Navbar from "@/components/layout/navbar"
-import EmptyState from "@/components/empty-state"
-import { ExternalLink, Clock, Target, Shield, Zap } from "lucide-react"
-import { cn } from "@/lib/utils"
-import type { Campaign } from "@/lib/models/Campaign"
+import { useState, useEffect } from "react";
+import { motion } from "framer-motion";
+import { Pacifico } from "next/font/google";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { ElegantShape } from "@/components/geometric-shapes";
+import Navbar from "@/components/layout/navbar";
+import EmptyState from "@/components/empty-state";
+import { ExternalLink, Clock, Target, Shield, Zap } from "lucide-react";
+import { cn } from "@/lib/utils";
+import type { Campaign } from "@/lib/models/Campaign";
 
 const pacifico = Pacifico({
   subsets: ["latin"],
   weight: ["400"],
   variable: "--font-pacifico",
-})
+});
 
 const fadeUpVariants = {
   hidden: { opacity: 0, y: 30 },
@@ -31,42 +31,42 @@ const fadeUpVariants = {
       ease: [0.25, 0.4, 0.25, 1],
     },
   }),
-}
+};
 
 export default function HomePage() {
-  const [campaigns, setCampaigns] = useState<Campaign[]>([])
-  const [isLoading, setIsLoading] = useState(true)
+  const [campaigns, setCampaigns] = useState<Campaign[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    fetchCampaigns()
-  }, [])
+    fetchCampaigns();
+  }, []);
 
   const fetchCampaigns = async () => {
     try {
-      const response = await fetch("/api/campaigns")
-      const data = await response.json()
-      setCampaigns(data.campaigns || [])
+      const response = await fetch("/api/campaigns");
+      const data = await response.json();
+      setCampaigns(data.campaigns || []);
     } catch (error) {
-      console.error("Error fetching campaigns:", error)
+      console.error("Error fetching campaigns:", error);
     } finally {
-      setIsLoading(false)
+      setIsLoading(false);
     }
-  }
+  };
 
   const getTimeLeft = (expiresAt: string) => {
-    const now = new Date().getTime()
-    const expiry = new Date(expiresAt).getTime()
-    const diff = expiry - now
+    const now = new Date().getTime();
+    const expiry = new Date(expiresAt).getTime();
+    const diff = expiry - now;
 
-    if (diff <= 0) return "Expired"
+    if (diff <= 0) return "Expired";
 
-    const hours = Math.floor(diff / (1000 * 60 * 60))
-    const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60))
+    const hours = Math.floor(diff / (1000 * 60 * 60));
+    const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
 
-    return `${hours}h ${minutes}m`
-  }
+    return `${hours}h ${minutes}m`;
+  };
 
-  const recentCampaigns = campaigns.slice(0, 6) // Show only first 6 campaigns
+  const recentCampaigns = campaigns.slice(0, 6); // Show only first 6 campaigns
 
   return (
     <div className="min-h-screen bg-black">
@@ -124,10 +124,17 @@ export default function HomePage() {
               className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-purple-500/10 border border-purple-500/20 mb-8 md:mb-12"
             >
               <Zap className="w-4 h-4 text-purple-400" />
-              <span className="text-sm text-purple-300 tracking-wide">Community-Powered Listings</span>
+              <span className="text-sm text-purple-300 tracking-wide">
+                Community-Powered Listings
+              </span>
             </motion.div>
 
-            <motion.div custom={1} variants={fadeUpVariants} initial="hidden" animate="visible">
+            <motion.div
+              custom={1}
+              variants={fadeUpVariants}
+              initial="hidden"
+              animate="visible"
+            >
               <h1 className="text-4xl sm:text-6xl md:text-8xl font-bold mb-6 md:mb-8 tracking-tight">
                 <span className="bg-clip-text text-transparent bg-gradient-to-b from-white to-white/80">
                   Fund Your Token's
@@ -136,7 +143,7 @@ export default function HomePage() {
                 <span
                   className={cn(
                     "bg-clip-text text-transparent bg-gradient-to-r from-purple-300 via-white/90 to-purple-300",
-                    pacifico.className,
+                    pacifico.className
                   )}
                 >
                   Dex Listing
@@ -144,10 +151,17 @@ export default function HomePage() {
               </h1>
             </motion.div>
 
-            <motion.div custom={2} variants={fadeUpVariants} initial="hidden" animate="visible">
+            <motion.div
+              custom={2}
+              variants={fadeUpVariants}
+              initial="hidden"
+              animate="visible"
+            >
               <p className="text-base sm:text-lg md:text-xl text-white/60 mb-8 leading-relaxed font-light tracking-wide max-w-2xl mx-auto px-4">
-                Community-driven crowdfunding for Solana memecoin Dexscreener listings. Secure escrow, transparent
-                funding, automatic refunds.
+                Fuel your fav Pump.fun shitcoins with DexVault. Start a
+                campaign, pick your chaos: LP boost? DexTools slot? Meme war
+                funds? You&nbsp;ve got 24 hours to hit the target before it
+                self-destructs. No KYC. No mercy. Just pure degen crowdfunding.
               </p>
             </motion.div>
 
@@ -189,8 +203,9 @@ export default function HomePage() {
                 <span className="font-medium">🔍 Live Escrow Tracking:</span>
               </div>
               <p className="text-white/60 text-sm mt-1">
-                All campaigns use real Solana mainnet escrow wallets with live balance monitoring. QR codes generated
-                for easy mobile contributions.
+                All campaigns use real Solana mainnet escrow wallets with live
+                balance monitoring. QR codes generated for easy mobile
+                contributions.
               </p>
             </motion.div>
           </div>
@@ -206,14 +221,19 @@ export default function HomePage() {
             transition={{ duration: 0.8 }}
             className="text-center mb-12"
           >
-            <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">Recent Campaigns</h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
+              Recent Campaigns
+            </h2>
             <p className="text-white/60 max-w-2xl mx-auto">
-              Join the community in funding the next big Solana memecoin listings
+              Join the community in funding the next big Solana memecoin
+              listings
             </p>
           </motion.div>
 
           {isLoading ? (
-            <div className="text-center text-white/60">Loading campaigns...</div>
+            <div className="text-center text-white/60">
+              Loading campaigns...
+            </div>
           ) : recentCampaigns.length === 0 ? (
             <EmptyState />
           ) : (
@@ -230,22 +250,33 @@ export default function HomePage() {
                       <CardContent className="p-6">
                         <div className="flex items-center gap-3 mb-4">
                           <img
-                            src={campaign.logo || "/placeholder.svg?height=48&width=48"}
+                            src={
+                              campaign.logo ||
+                              "/placeholder.svg?height=48&width=48"
+                            }
                             alt={campaign.name}
                             className="w-12 h-12 rounded-full bg-purple-500/20"
                           />
                           <div>
-                            <h3 className="text-white font-semibold">{campaign.name}</h3>
-                            <p className="text-purple-300 text-sm">${campaign.symbol}</p>
+                            <h3 className="text-white font-semibold">
+                              {campaign.name}
+                            </h3>
+                            <p className="text-purple-300 text-sm">
+                              ${campaign.symbol}
+                            </p>
                           </div>
                           <Badge
-                            variant={campaign.status === "completed" ? "default" : "secondary"}
+                            variant={
+                              campaign.status === "completed"
+                                ? "default"
+                                : "secondary"
+                            }
                             className={
                               campaign.status === "completed"
                                 ? "bg-green-500/20 text-green-300"
                                 : campaign.status === "failed"
-                                  ? "bg-red-500/20 text-red-300"
-                                  : "bg-purple-500/20 text-purple-300"
+                                ? "bg-red-500/20 text-red-300"
+                                : "bg-purple-500/20 text-purple-300"
                             }
                           >
                             {campaign.status}
@@ -263,7 +294,12 @@ export default function HomePage() {
                           <div className="w-full bg-white/10 rounded-full h-2">
                             <div
                               className="bg-gradient-to-r from-purple-500 to-purple-600 h-2 rounded-full transition-all duration-300"
-                              style={{ width: `${Math.min((campaign.raised / campaign.goal) * 100, 100)}%` }}
+                              style={{
+                                width: `${Math.min(
+                                  (campaign.raised / campaign.goal) * 100,
+                                  100
+                                )}%`,
+                              }}
                             />
                           </div>
 
@@ -297,7 +333,10 @@ export default function HomePage() {
                 className="text-center mt-8"
               >
                 <Link href="/campaigns">
-                  <Button variant="outline" className="border-purple-500/30 text-purple-300 hover:bg-purple-500/10">
+                  <Button
+                    variant="outline"
+                    className="border-purple-500/30 text-purple-300 hover:bg-purple-500/10"
+                  >
                     View All Campaigns
                     <ExternalLink className="w-4 h-4 ml-2" />
                   </Button>
@@ -308,5 +347,5 @@ export default function HomePage() {
         </div>
       </div>
     </div>
-  )
+  );
 }
